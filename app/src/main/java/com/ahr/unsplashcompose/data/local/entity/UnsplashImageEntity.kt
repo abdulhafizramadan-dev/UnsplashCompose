@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import com.ahr.unsplashcompose.util.Constant.UNSPLASH_IMAGE_TABLE
 
 @Entity(tableName = UNSPLASH_IMAGE_TABLE)
-data class UnsplashImageResponse(
+data class UnsplashImageEntity(
 
 	@PrimaryKey(autoGenerate = false)
 	val id: String,
