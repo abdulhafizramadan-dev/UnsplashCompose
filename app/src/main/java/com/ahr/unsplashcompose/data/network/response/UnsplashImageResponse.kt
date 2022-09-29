@@ -1,5 +1,6 @@
 package com.ahr.unsplashcompose.data.network.response
 
+import com.ahr.unsplashcompose.data.local.entity.UnsplashImageEntity
 import com.google.gson.annotations.SerializedName
 
 
@@ -12,29 +13,16 @@ data class UnsplashImageResponse(
 	val likes: Int? = null,
 
 	@field:SerializedName("user")
-	val user: User? = null,
+	val user: UserItemResponse? = null,
 
 	@field:SerializedName("urls")
-	val urls: Urls? = null
+	val urls: UrlsItemResponse? = null
 )
 
-data class User(
-
-	@field:SerializedName("links")
-	val userLinks: UserLinks? = null,
-
-	@field:SerializedName("username")
-	val username: String? = null
-)
-
-data class UserLinks(
-
-	@field:SerializedName("html")
-	val html: String? = null
-)
-
-data class Urls(
-
-	@field:SerializedName("regular")
-	val regular: String? = null
-)
+fun UnsplashImageResponse.asEntity(): UnsplashImageEntity =
+	UnsplashImageEntity(
+		id = id ?: "",
+		likes = likes ?: 0,
+		user = user.asEntity(),
+		urls = urls.asEntity()
+	)

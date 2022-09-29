@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.ahr.unsplashcompose.util.Constant.UNSPLASH_REMOTE_KEYS_TABLE
 
 @Entity(UNSPLASH_REMOTE_KEYS_TABLE)
-data class UnsplashRemoteKeys(
+data class UnsplashImageRemoteKeys(
     @PrimaryKey(autoGenerate = false)
     val id: String,
     @ColumnInfo(name = "prev_key")

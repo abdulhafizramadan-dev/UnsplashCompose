@@ -2,8 +2,6 @@ package com.ahr.unsplashcompose.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.ahr.unsplashcompose.data.local.dao.UnsplashImageDao
-import com.ahr.unsplashcompose.data.local.dao.UnsplashImageRemoteKeysDao
 import com.ahr.unsplashcompose.data.local.database.UnsplashDatabase
 import com.ahr.unsplashcompose.util.Constant.UNSPLASH_DATABASE_NAME
 import dagger.Module
@@ -27,15 +25,4 @@ object DatabaseModule {
         ).build()
     }
 
-    @Provides
-    @Singleton
-    fun provideUnsplashImageDao(unsplashDatabase: UnsplashDatabase): UnsplashImageDao {
-        return unsplashDatabase.unsplashImageDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideUnsplashImageRemoteKeysDao(unsplashDatabase: UnsplashDatabase): UnsplashImageRemoteKeysDao {
-        return unsplashDatabase.unsplashImageRemoteKeysDao()
-    }
 }

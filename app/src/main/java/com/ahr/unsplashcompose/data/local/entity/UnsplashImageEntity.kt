@@ -1,41 +1,30 @@
 package com.ahr.unsplashcompose.data.local.entity
 
-import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.ahr.unsplashcompose.domain.data.UnsplashImage
 import com.ahr.unsplashcompose.util.Constant.UNSPLASH_IMAGE_TABLE
 
 @Entity(tableName = UNSPLASH_IMAGE_TABLE)
 data class UnsplashImageEntity(
 
 	@PrimaryKey(autoGenerate = false)
-	val id: String,
+	val id: String = "",
 
-	val likes: Int,
-
-	@Embedded
-	val user: User,
+	val likes: Int = 0,
 
 	@Embedded
-	val urls: Urls
-)
-
-data class User(
+	val user: UserEntity,
 
 	@Embedded
-	@ColumnInfo(name = "links")
-	val userLinks: UserLinks,
-
-	val username: String
+	val urls: UrlsEntity
 )
 
-data class UserLinks(
-
-	val html: String
-)
-
-data class Urls(
-
-	val regular: String
-)
+fun UnsplashImageEntity.asDomain(): UnsplashImage =
+	UnsplashImage(
+		id = id,
+		likes = likes,
+		user = user.asDomain(),
+		urls = urls.asDomain()
+	)
