@@ -1,16 +1,15 @@
 package com.ahr.unsplashcompose.data.repository
 
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
+import androidx.paging.*
 import com.ahr.unsplashcompose.data.local.database.UnsplashDatabase
-import com.ahr.unsplashcompose.data.local.entity.UnsplashImageEntity
+import com.ahr.unsplashcompose.data.local.entity.asDomain
 import com.ahr.unsplashcompose.data.network.service.UnsplashService
 import com.ahr.unsplashcompose.data.paging.UnsplashImageRemoteMediator
+import com.ahr.unsplashcompose.domain.data.UnsplashImage
 import com.ahr.unsplashcompose.util.Constant.ITEMS_PER_PAGE
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @ExperimentalPagingApi
@@ -19,7 +18,7 @@ class UnsplashImageRepository @Inject constructor(
     private val unsplashService: UnsplashService,
     private val unsplashDatabase: UnsplashDatabase
 ) {
-    fun getLatestImages(): Flow<PagingData<UnsplashImageEntity>> {
+    fun getLatestImages(): Flow<PagingData<UnsplashImage>> {
         return Pager(
             config = PagingConfig(pageSize = ITEMS_PER_PAGE),
             remoteMediator = UnsplashImageRemoteMediator(
@@ -29,5 +28,8 @@ class UnsplashImageRepository @Inject constructor(
         ) {
             unsplashDatabase.unsplashImageDao().getAllImages()
         }.flow
+            .map { pagingSource ->
+                pagingSource.map { it.asDomain() }
+            }
     }
 }

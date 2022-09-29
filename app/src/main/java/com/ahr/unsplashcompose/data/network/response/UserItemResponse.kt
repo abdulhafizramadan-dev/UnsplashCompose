@@ -1,6 +1,7 @@
 package com.ahr.unsplashcompose.data.network.response
 
 import com.ahr.unsplashcompose.data.local.entity.UserEntity
+import com.ahr.unsplashcompose.data.local.entity.UserLinksEntity
 import com.google.gson.annotations.SerializedName
 
 data class UserItemResponse(
@@ -18,4 +19,4 @@ fun UserItemResponse?.asEntity(): UserEntity =
             userLinks = userLinks.asEntity(),
             username = username ?: ""
         )
-    } else UserEntity()
+    } else UserEntity(userLinks = UserLinksEntity())

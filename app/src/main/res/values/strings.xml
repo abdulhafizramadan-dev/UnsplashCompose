@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Unsplash Compose</string>
+    <string name="heart_icon">Heart Icon</string>
+    <string name="action_search">Search Action</string>
 </resources>

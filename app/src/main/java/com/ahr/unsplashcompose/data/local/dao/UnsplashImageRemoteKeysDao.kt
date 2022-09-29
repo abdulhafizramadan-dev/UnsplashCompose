@@ -9,12 +9,12 @@ import com.ahr.unsplashcompose.data.local.entity.UnsplashImageRemoteKeys
 @Dao
 interface UnsplashImageRemoteKeysDao {
 
-    @Query("SELECT * FROM unsplash_remote_keys_table WHERE id=:id")
+    @Query("SELECT * FROM unsplash_image_remote_keys_table WHERE id=:id")
     suspend fun getRemoteKeys(id: String): UnsplashImageRemoteKeys
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRemoteKeys(remoteKeys: List<UnsplashImageRemoteKeys>)
 
-    @Query("DELETE FROM unsplash_remote_keys_table")
+    @Query("DELETE FROM unsplash_image_remote_keys_table")
     suspend fun deleteRemoteKeys()
 }

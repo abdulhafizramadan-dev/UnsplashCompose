@@ -1,14 +1,12 @@
 package com.ahr.unsplashcompose.data.local.entity
 
-import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import com.ahr.unsplashcompose.domain.data.User
 
 data class UserEntity(
 
     @Embedded
-    @ColumnInfo(name = "links")
-    val userLinks: UserLinksEntity = UserLinksEntity(),
+    val userLinks: UserLinksEntity,
 
     val username: String = ""
 )
