@@ -4,5 +4,5 @@ data class User(
 
     val userLinks: UserLinks,
 
-    val username: String
+    val username: String = ""
 )

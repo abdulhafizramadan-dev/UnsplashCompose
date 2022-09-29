@@ -1,6 +1,7 @@
 package com.ahr.unsplashcompose.data.network.response
 
 import com.ahr.unsplashcompose.data.local.entity.UnsplashImageEntity
+import com.ahr.unsplashcompose.domain.data.UnsplashImage
 import com.google.gson.annotations.SerializedName
 
 
@@ -25,4 +26,12 @@ fun UnsplashImageResponse.asEntity(): UnsplashImageEntity =
 		likes = likes ?: 0,
 		user = user.asEntity(),
 		urls = urls.asEntity()
+	)
+
+fun UnsplashImageResponse.asDomain(): UnsplashImage =
+	UnsplashImage(
+		id = id ?: "",
+		likes = likes ?: 0,
+		user = user.asDomain(),
+		urls = urls.asDomain()
 	)

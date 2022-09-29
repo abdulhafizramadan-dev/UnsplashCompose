@@ -19,8 +19,9 @@ interface UnsplashService {
     @Headers("Authorization: Client-ID ${BuildConfig.API_KEY}")
     @GET("/search/photos")
     suspend fun searchPhotos(
+        @Query("query") query: String,
         @Query("page") page: Int,
-        @Query("per_page") per_page: Int
+        @Query("per_page") perPage: Int
     ): SearchUnsplashImageResponse
 
 }

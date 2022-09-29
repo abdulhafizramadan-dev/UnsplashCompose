@@ -3,7 +3,9 @@ package com.ahr.unsplashcompose.data.repository
 import androidx.paging.*
 import com.ahr.unsplashcompose.data.local.database.UnsplashDatabase
 import com.ahr.unsplashcompose.data.local.entity.asDomain
+import com.ahr.unsplashcompose.data.network.response.asDomain
 import com.ahr.unsplashcompose.data.network.service.UnsplashService
+import com.ahr.unsplashcompose.data.paging.SearchUnsplashImagePagingSource
 import com.ahr.unsplashcompose.data.paging.UnsplashImageRemoteMediator
 import com.ahr.unsplashcompose.domain.data.UnsplashImage
 import com.ahr.unsplashcompose.util.Constant.ITEMS_PER_PAGE
@@ -18,6 +20,7 @@ class UnsplashImageRepository @Inject constructor(
     private val unsplashService: UnsplashService,
     private val unsplashDatabase: UnsplashDatabase
 ) {
+
     fun getLatestImages(): Flow<PagingData<UnsplashImage>> {
         return Pager(
             config = PagingConfig(pageSize = ITEMS_PER_PAGE),
@@ -28,6 +31,21 @@ class UnsplashImageRepository @Inject constructor(
         ) {
             unsplashDatabase.unsplashImageDao().getAllImages()
         }.flow
+            .map { pagingSource ->
+                pagingSource.map { it.asDomain() }
+            }
+    }
+
+    fun searchImages(query: String): Flow<PagingData<UnsplashImage>> {
+        return Pager(
+            config = PagingConfig(ITEMS_PER_PAGE),
+            pagingSourceFactory = {
+                SearchUnsplashImagePagingSource(
+                    unsplashService = unsplashService,
+                    query = query
+                )
+            }
+        ).flow
             .map { pagingSource ->
                 pagingSource.map { it.asDomain() }
             }
